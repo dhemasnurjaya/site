@@ -1,0 +1,37 @@
+env: development
+
+keywords: [Blog, Portfolio, Software, Developer, Engineer, Code, Coding, Tech, Mobile, Android, iOS, Flutter, Dart]
+author: Me
+contact:
+  email: dhemasnurjaya@gmail.com
+
+ShowReadingTime: true
+ShowShareButtons: true
+ShowPostNavLinks: true
+ShowBreadCrumbs: true
+
+profileMode:
+  enabled: true # needs to be explicitly set
+  title: "Dhemas Eka Rilian Nurjaya"
+  subtitle: "Passionate Software Engineer"
+  # imageUrl: "https://placehold.co/120"
+  # imageWidth: 120
+  # imageHeight: 120
+  # imageTitle: "Portrait of Dhemas"
+  # buttons:
+  #   - name: Posts
+  #     url: posts
+  #   - name: Tags
+  #     url: tags
+
+socialIcons:
+  - name: linkedin
+    url: "https://linkedin.com"
+  - name: github
+    url: "https://github.com/"
+  - name: x
+    url: "https://x.com/"
+  - name: facebook
+    url: "https://facebook.com/"
+  - name: email
+    url: "mailto:dhemasnurjaya@gmail.com"

@@ -1,0 +1,16 @@
+baseURL: https://dhemasnurjaya.com/
+title: Dhemas Nurjaya
+subtitle: Software Engineer
+languageCode: en-us
+params:
+paginate: 5
+theme: PaperMod
+
+taxonomies:
+  tag: tags
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # necessary for search

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on Dhemas Nurjaya</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on Dhemas Nurjaya</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Mar 2024 14:16:19 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Welcome</title>
+      <link>http://localhost:1313/posts/welcome/</link>
+      <pubDate>Mon, 18 Mar 2024 14:16:19 +0700</pubDate>
+      <guid>http://localhost:1313/posts/welcome/</guid>
+      <description>Introduction Hi there! I&amp;rsquo;m Dhemas, an Indonesian software engineer. I grew up in a small town called Salatiga, Central Java, Indonesia. I really like to tinker with computer since I was a child. Playing games (SkiFree to Age of Empires II) in my dad&amp;rsquo;s office computer, then learn some office softwares, buying a floppy disk to save my diary (encrypted with Webdings font!), buying PC magazines, leads to learn how to assemble my own computer and do an OS install.</description>
+    </item>
+  </channel>
+</rss>
