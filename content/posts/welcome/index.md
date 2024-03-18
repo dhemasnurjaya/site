@@ -1,7 +1,7 @@
 ---
 title: 'Welcome'
 date: 2024-03-18T14:16:19+07:00
-draft: true
+draft: false
 tags:
   - Misc
 ---
@@ -15,7 +15,6 @@ Long story short, I decide to take an Information Technology major in my local u
 
 I never really write anything in my 7 years journey and I feel kinda regretted it. So I decide to create this blog, where I can write anything I found interesting. Maybe it's a coding-related thing, technology heads up, or maybe just my random thought. Feel free read and share!
 
-{{< highlight go >}} A bunch of code here {{< /highlight >}}
 
 ## Bonus
 
