@@ -5,6 +5,9 @@ author: Me
 contact:
   email: dhemasnurjaya@gmail.com
 
+# label:
+#   icon: "https://placehold.co/120"
+
 ShowReadingTime: true
 ShowShareButtons: true
 ShowPostNavLinks: true
