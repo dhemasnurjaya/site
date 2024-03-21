@@ -266,4 +266,4 @@ There is a package called [auto_route](https://pub.dev/packages/auto_route) that
 
 Use your time to read more about several flutter packages we used in this article. So in the next part you already know how to use them.
 
-All the codes in this set of articles are available on [GitHub](https://github.com/dhemasnurjaya/flutter_clean_architecture), and will be updated regularly because I use them too as my skeleton project.
+All the codes in this set of articles are available on [GitHub](https://github.com/dhemasnurjaya/flutter-clean-architecture), and will be updated regularly because I use them too as my skeleton project.
