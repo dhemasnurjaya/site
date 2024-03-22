@@ -1,5 +1,8 @@
 env: development
 
+label:
+  text: "#!"
+
 keywords: [Blog, Portfolio, Software, Developer, Engineer, Code, Coding, Tech, Mobile, Android, iOS, Flutter, Dart]
 author: Me
 contact:
