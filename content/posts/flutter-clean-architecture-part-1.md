@@ -2,6 +2,8 @@
 title: 'Flutter Clean Architecture Part 1'
 date: 2024-03-20T13:49:04+07:00
 draft: false
+tags:
+  - Flutter
 ---
 
 ## What is Clean Architecture?
