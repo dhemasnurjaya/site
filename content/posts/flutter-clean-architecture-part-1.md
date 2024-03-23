@@ -1,6 +1,6 @@
 ---
 title: 'Flutter Clean Architecture Part 1'
-date: 2024-03-20T13:49:04+07:00
+date: 2024-03-23T14:45:04+07:00
 draft: false
 tags:
   - Flutter
@@ -8,7 +8,9 @@ tags:
 
 ## What is Clean Architecture?
 
-Do you ever wondering how to manage your Flutter code? How to make it neat, modular, easy to maintain and test? Here where *clean architecture* comes in. Basically, clean architecture is a way to organize your code into separated pieces that will make your project cleaner. It may looks complicated at first and a lot of boiler code for some reasons. But trust me, it will be a lot easier if you apply the clean architecture in your code, especially in medium to bigger projects.
+Do you ever wondering how to manage your Flutter code? How to make it neat, modular, easy to maintain and test? Here where *clean architecture* comes in.
+
+Basically, clean architecture is a way to organize your code into separated pieces that will make your project cleaner. It may looks complicated at first and a lot of boiler code for some reasons. But trust me, it will be a lot easier if you apply the clean architecture in your code, especially in medium to bigger projects.
 
 In this set of Clean Architecture articles, we will create a basic mobile app that uses [WeatherAPI](https://www.weatherapi.com/) to get current weather. Let's get started!
 
@@ -32,14 +34,15 @@ your-flutter-project-dir
 │   │   ├── routes
 │   │
 │   ├── data
+│   │   ├── data_sources
+│   │   │   ├── local
+│   │   │   ├── remote
+│   │   ├── models
+│   │   ├── repositories
 │   ├── domain
+│   │   ├── repositories
+│   │   ├── use_cases
 │   ├── presentation
-│   │   ├── home
-│   │   │   ├── blocs
-│   │   │   ├── widgets
-│   │   │   ├── home_page.dart
-│   │   │
-│   │   ├── ... other presentations
 │   │
 │   ├── injection_container.dart
 │   ├── main.dart
@@ -72,83 +75,60 @@ abstract class Config<T> {
 }
 ```
 
-and `weather_api_response.dart` model class for the [WeatherAPI](https://www.weatherapi.com/) response using [freezed](https://pub.dev/packages/freezed#creating-a-model-using-freezed) package.
+and `weather_api_response.dart` model class for the [WeatherAPI](https://www.weatherapi.com/) response using [json_serializable](https://pub.dev/packages/json_serializable) package.
 
 Note: please don't feel intimidated, it's just a model class. I already throws out many fields from the response though.
 
 ```dart
 // lib/core/data/remote/model/weather_api_response.dart
 
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-part 'weather_api_response.freezed.dart';
-part 'weather_api_response.g.dart';
+part 'weather_api_response_model.g.dart';
 
-@freezed
-class WeatherApiResponse with _$WeatherApiResponse {
-  const factory WeatherApiResponse({
-    required WeatherApiLocation? location,
-    required WeatherApiData? data,
-    required WeatherApiError? error,
-  }) = _WeatherApiResponse;
+@JsonSerializable()
+class WeatherApiResponseModel {
+  final WeatherApiLocationModel? location;
+  final WeatherApiErrorModel? error;
 
-  factory WeatherApiResponse.fromJson(Map<String, dynamic> json) =>
-      _$WeatherApiResponseFromJson(json);
+  WeatherApiResponseModel({
+    required this.location,
+    required this.error,
+  });
+
+  factory WeatherApiResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$WeatherApiResponseModelFromJson(json);
 }
 
-@freezed
-class WeatherApiLocation with _$WeatherApiLocation {
-  @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory WeatherApiLocation({
-    required String name,
-    required String region,
-    required String country,
-  }) = _WeatherApiLocation;
+@JsonSerializable()
+class WeatherApiLocationModel {
+  final String name;
+  final String region;
+  final String country;
 
-  factory WeatherApiLocation.fromJson(Map<String, dynamic> json) =>
-      _$WeatherApiLocationFromJson(json);
+  const WeatherApiLocationModel({
+    required this.name,
+    required this.region,
+    required this.country,
+  });
+
+  factory WeatherApiLocationModel.fromJson(Map<String, dynamic> json) =>
+      _$WeatherApiLocationModelFromJson(json);
 }
 
-@freezed
-class WeatherApiData with _$WeatherApiData {
-  @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory WeatherApiData({
-    required DateTime lastUpdated,
-    required double tempC,
-    required WeatherApiCondition condition,
-    required double windKph,
-    required String windDir,
-    required double precipMm,
-    required int humidity,
-    required int cloud,
-  }) = _WeatherApiData;
+@JsonSerializable()
+class WeatherApiErrorModel {
+  final int code;
+  final String message;
 
-  factory WeatherApiData.fromJson(Map<String, dynamic> json) =>
-      _$WeatherApiDataFromJson(json);
+  const WeatherApiErrorModel({
+    required this.code,
+    required this.message,
+  });
+
+  factory WeatherApiErrorModel.fromJson(Map<String, dynamic> json) =>
+      _$WeatherApiErrorModelFromJson(json);
 }
-
-@freezed
-class WeatherApiCondition with _$WeatherApiCondition {
-  const factory WeatherApiCondition({
-    required String text,
-    required String icon,
-  }) = _WeatherApiCondition;
-
-  factory WeatherApiCondition.fromJson(Map<String, dynamic> json) =>
-      _$WeatherApiConditionFromJson(json);
-}
-
-@freezed
-class WeatherApiError with _$WeatherApiError {
-  const factory WeatherApiError({
-    required int code,
-    required String message,
-  }) = _WeatherApiError;
-
-  factory WeatherApiError.fromJson(Map<String, dynamic> json) =>
-      _$WeatherApiErrorFromJson(json);
-}
-
 ```
 
 
