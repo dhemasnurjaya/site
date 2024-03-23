@@ -1,10 +1,15 @@
 ---
 title: 'Flutter Clean Architecture Part 1'
+description: Dive into Clean Architecture for Flutter or Dart projects - Part 1
+images:
+- media/opengraph.png
 date: 2024-03-23T14:45:04+07:00
 draft: false
 tags:
   - Flutter
 ---
+
+![flutter-clean-architecture-part-1](media/flutter_dash.png)
 
 ## What is Clean Architecture?
 
