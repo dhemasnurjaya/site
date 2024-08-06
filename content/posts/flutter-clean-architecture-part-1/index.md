@@ -38,16 +38,18 @@ your-flutter-project-dir
 │   │   ├── presentation
 │   │   ├── routes
 │   │
-│   ├── data
-│   │   ├── data_sources
-│   │   │   ├── local
-│   │   │   ├── remote
-│   │   ├── models
-│   │   ├── repositories
-│   ├── domain
-│   │   ├── repositories
-│   │   ├── use_cases
-│   ├── presentation
+│   ├── features
+│   │   ├── feature_name
+│   │   │   ├── data
+│   │   │   │   ├── data_sources
+│   │   │   │   │   ├── local
+│   │   │   │   │   ├── remote
+│   │   │   │   ├── models
+│   │   │   │   ├── repositories
+│   │   │   ├── domain
+│   │   │   │   ├── repositories
+│   │   │   │   ├── use_cases
+│   │   │   ├── presentation
 │   │
 │   ├── injection_container.dart
 │   ├── main.dart
