@@ -87,7 +87,7 @@ and `weather_api_response.dart` model class for the [WeatherAPI](https://www.wea
 Note: please don't feel intimidated, it's just a model class. I already throws out many fields from the response though.
 
 ```dart
-// lib/core/data/remote/model/weather_api_response.dart
+// lib/core/data/remote/models/weather_api_response_model.dart
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -138,6 +138,13 @@ class WeatherApiErrorModel {
 }
 ```
 
+Also I like to have a hosts file to store the url of the [WeatherAPI](https://www.weatherapi.com) service.
+
+```dart
+// lib/core/data/remote/hosts.dart
+
+const String weatherApiHost = 'api.weatherapi.com';
+```
 
 #### Core - Domain
 
@@ -160,7 +167,6 @@ abstract class UseCase<Type, Params> {
   Future<Either<Failure, Type>> execute(Params params);
 }
 ```
-
 
 #### Core - Error
 
