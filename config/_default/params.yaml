@@ -12,6 +12,9 @@ ShowReadingTime: true
 ShowShareButtons: true
 ShowPostNavLinks: true
 ShowBreadCrumbs: true
+ShowCodeCopyButtons: true
+UseHugoToc: true
+showtoc: true
 
 profileMode:
   enabled: true # needs to be explicitly set
