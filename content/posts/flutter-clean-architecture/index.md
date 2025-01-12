@@ -188,7 +188,7 @@ I'll try to explain briefly, `use_case.dart` below has 2 generics. `Type` is a r
 ```dart
 // lib/core/domain/use_case.dart
 
-import 'package:clean_architecture/core/error/failure.dart';
+import 'package:clean_architecture/core/error/failures.dart';
 import 'package:fpdart/fpdart.dart';
 
 /// [Type] is the return type of a successful use case call.
@@ -571,7 +571,7 @@ class CurrentWeather {
 Then create an abstract class for [WeatherAPI](https://www.weatherapi.com) repository.
 
 ```dart
-// features/weather/domain/repositories/weather_api_repository.dart
+// lib/features/weather/domain/repositories/weather_api_repository.dart
 
 import 'package:clean_architecture/core/error/failures.dart';
 import 'package:clean_architecture/features/weather/domain/entities/current_weather.dart';
@@ -590,7 +590,7 @@ Next we will create a `use case` for getting current weather data using the repo
 // lib/features/weather/domain/use_cases/get_current_weather.dart
 
 import 'package:clean_architecture/core/domain/use_case.dart';
-import 'package:clean_architecture/core/error/failure.dart';
+import 'package:clean_architecture/core/error/failures.dart';
 import 'package:clean_architecture/features/weather/domain/entities/current_weather.dart';
 import 'package:clean_architecture/features/weather/domain/repositories/weather_api_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -787,7 +787,7 @@ That's it. Now we have the `bloc` for the `current_weather` page. The code itsel
 The next part is to create weather page in `presentation` directory.
 
 ```dart
-// lib/features/current_weather/presentation/current_weather_page.dart
+// lib/features/weather/presentation/current_weather_page.dart
 
 import 'package:auto_route/auto_route.dart';  
 import 'package:clean_architecture/core/router/app_router.gr.dart';  
@@ -952,7 +952,7 @@ class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
 and we also need a page to change application configurations (for now we only have a theme mode config).
 
 ```dart
-// lib/feature/app_settings/presentation/app_settings_page.dart
+// lib/features/app_settings/presentation/app_settings_page.dart
 
 import 'package:auto_route/auto_route.dart';  
 import 'package:clean_architecture/core/presentation/theme/theme_mode_cubit.dart';  
@@ -1037,25 +1037,52 @@ In clean architecture, we use **dependency injection** (or DI in short) to make 
 There are many ways to achieve dependency injection in Flutter, for this project I will use [GetIt](https://pub.dev/packages/get_it). Let's create our `injection_container`, this class is responsible for creating all the instances that we need in our project.
 
 ```dart
-// injection_container.dart
+// lib/injection_container.dart
 
+import 'package:clean_architecture/core/data/local/config.dart';
+import 'package:clean_architecture/core/data/local/theme_mode_config.dart';
+import 'package:clean_architecture/core/env.dart';
 import 'package:clean_architecture/core/network/network.dart';
+import 'package:clean_architecture/core/presentation/theme/theme_mode_cubit.dart';
 import 'package:clean_architecture/features/weather/data/data_sources/remote/weather_api_remote_data_source.dart';
 import 'package:clean_architecture/features/weather/data/repositories/weather_api_repository_impl.dart';
 import 'package:clean_architecture/features/weather/domain/repositories/weather_api_repository.dart';
 import 'package:clean_architecture/features/weather/domain/use_cases/get_current_weather.dart';
 import 'package:clean_architecture/features/weather/presentation/bloc/current_weather_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:http/http.dart' as http;
 
 final getIt = GetIt.instance;
 
 void setup() {
+  // env
+  getIt.registerSingleton<Env>(EnvImpl());
+
   // network
-  getIt.registerLazySingleton<Network>(() => NetworkImpl());
+  getIt.registerLazySingleton<http.Client>(() => http.Client());
+  getIt.registerLazySingleton<Network>(() => NetworkImpl(getIt()));
+
+  // shared preferences
+  getIt.registerSingletonAsync<SharedPreferences>(
+    () async {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs;
+    },
+  );
+
+  // configs
+  getIt.registerSingletonWithDependencies<Config<ThemeMode>>(
+    () => ThemeModeConfig(sharedPreferences: getIt()),
+    dependsOn: [SharedPreferences],
+  );
 
   // data sources
   getIt.registerLazySingleton<WeatherApiRemoteDataSource>(
     () => WeatherApiRemoteDataSourceImpl(
+      env: getIt(),
       network: getIt(),
     ),
   );
@@ -1075,11 +1102,23 @@ void setup() {
   );
 
   // blocs
+  getIt.registerSingletonAsync<ThemeModeCubit>(
+    () async {
+      final initialThemeMode = await getIt<Config<ThemeMode>>().get();
+      return ThemeModeCubit(
+        themeModeConfig: getIt(),
+        initialThemeMode: initialThemeMode,
+      );
+    },
+    dependsOn: [SharedPreferences, Config<ThemeMode>],
+  );
   getIt.registerFactory<CurrentWeatherBloc>(
     () => CurrentWeatherBloc(
       getCurrentWeather: getIt(),
     ),
   );
+
+  // others
 }
 ```
 
