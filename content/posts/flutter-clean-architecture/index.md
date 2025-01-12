@@ -789,157 +789,222 @@ The next part is to create weather page in `presentation` directory.
 ```dart
 // lib/features/current_weather/presentation/current_weather_page.dart
 
-import 'package:auto_route/auto_route.dart';
-import 'package:clean_architecture/features/weather/presentation/bloc/current_weather_bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-@RoutePage()
-class CurrentWeatherPage extends StatefulWidget {
-  const CurrentWeatherPage({super.key});
-
-  @override
-  State<CurrentWeatherPage> createState() => _CurrentWeatherPageState();
-}
-
-class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
-  final _cityTextCtl = TextEditingController();
-  final _cityTextFocus = FocusNode();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Current Weather'),
-      ),
-      body: BlocBuilder<CurrentWeatherBloc, CurrentWeatherState>(
-        builder: (context, state) {
-          return ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            children: [
-              TextField(
-                controller: _cityTextCtl,
-                focusNode: _cityTextFocus,
-                decoration: const InputDecoration(
-                  hintText: 'City',
+import 'package:auto_route/auto_route.dart';  
+import 'package:clean_architecture/core/router/app_router.gr.dart';  
+import 'package:clean_architecture/features/weather/presentation/bloc/current_weather_bloc.dart';  
+import 'package:flutter/material.dart';  
+import 'package:flutter_bloc/flutter_bloc.dart';  
+  
+@RoutePage()  
+class CurrentWeatherPage extends StatefulWidget {  
+  const CurrentWeatherPage({super.key});  
+  
+  @override  
+  State<CurrentWeatherPage> createState() => _CurrentWeatherPageState();  
+}  
+  
+class _CurrentWeatherPageState extends State<CurrentWeatherPage> {  
+  final _cityTextCtl = TextEditingController();  
+  final _cityTextFocus = FocusNode();  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    return Scaffold(  
+      appBar: AppBar(  
+        title: const Text('Current Weather'),  
+        actions: [  
+          IconButton(  
+            icon: const Icon(Icons.settings),  
+            onPressed: () {  
+              context.router.push(const AppSettingsRoute());  
+            },
+          ),
+        ],
+      ),      
+      body: BlocBuilder<CurrentWeatherBloc, CurrentWeatherState>(  
+        builder: (context, state) {  
+          return ListView(  
+            padding: const EdgeInsets.symmetric(horizontal: 16),  
+            children: [  
+              TextField(  
+                controller: _cityTextCtl,  
+                focusNode: _cityTextFocus,  
+                decoration: const InputDecoration(  
+                  hintText: 'City',  
                 ),
               ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () {
-                  context.read<CurrentWeatherBloc>().add(
-                        GetCurrentWeatherEvent(
-                          city: _cityTextCtl.text,
+              const SizedBox(height: 8),  
+              ElevatedButton(  
+                onPressed: () {  
+                  context.read<CurrentWeatherBloc>().add(  
+                        GetCurrentWeatherEvent(  
+                          city: _cityTextCtl.text,  
                         ),
                       );
-                },
-                child: const Text('Get Weather'),
+                    },
+                child: const Text('Get Weather'),  
               ),
-              const SizedBox(height: 16),
-              _buildWeather(state),
+              const SizedBox(height: 16),  
+              _buildWeather(state),  
             ],
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildWeather(CurrentWeatherState state) {
-    if (state is CurrentWeatherLoadedState) {
-      _cityTextFocus.unfocus();
-
-      final weatherIconUrl =
-          'https:${state.currentWeather.conditionIcon ?? '//placehold.co/64x64/png'}';
-
-      return Column(
-        children: [
-          Image.network(weatherIconUrl),
-          Text(
-            state.currentWeather.conditionText ?? '-',
-            style: Theme.of(context).textTheme.headlineSmall,
+      ),    
+    );  
+  }  
+  
+  Widget _buildWeather(CurrentWeatherState state) {  
+    if (state is CurrentWeatherLoadedState) {  
+      _cityTextFocus.unfocus();  
+  
+      final weatherIconUrl =  
+          'https:${state.currentWeather.conditionIcon ?? '//placehold.co/64x64/png'}';  
+  
+      return Column(  
+        children: [  
+          Image.network(weatherIconUrl),  
+          Text(  
+            state.currentWeather.conditionText ?? '-',  
+            style: Theme.of(context).textTheme.headlineSmall,  
           ),
-          Text(
-              '${state.currentWeather.locationName}, ${state.currentWeather.locationRegion}'),
-          Text('${state.currentWeather.locationCountry}'),
-          const SizedBox(height: 16),
-          GridView.count(
-            crossAxisCount: 3,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              _buildDataCard(
-                'Temp (C)',
-                '${state.currentWeather.tempC ?? '-'}',
-              ),
-              _buildDataCard(
-                'Feels Like (C)',
-                '${state.currentWeather.feelslikeC ?? '-'}',
-              ),
-              _buildDataCard(
-                'Wind (km/h)',
-                '${state.currentWeather.windKph ?? '-'}',
-              ),
-              _buildDataCard(
-                'Wind Dir',
-                state.currentWeather.windDir,
-              ),
-              _buildDataCard(
-                'Precip (mm)',
-                '${state.currentWeather.precipMm ?? '-'}',
-              ),
-              _buildDataCard(
-                'Humidity (%)',
-                '${state.currentWeather.humidity ?? '-'}',
-              ),
-              _buildDataCard(
-                'Cloud (%)',
-                '${state.currentWeather.cloud ?? '-'}',
-              ),
-              _buildDataCard(
-                'Vis (km)',
-                '${state.currentWeather.visKm ?? '-'}',
-              ),
-              _buildDataCard(
-                'UV',
-                '${state.currentWeather.uv ?? '-'}',
+          Text(  
+              '${state.currentWeather.locationName}, ${state.currentWeather.locationRegion}'),  
+          Text('${state.currentWeather.locationCountry}'),  
+          const SizedBox(height: 16),  
+          GridView.count(  
+            crossAxisCount: 3,  
+            shrinkWrap: true,  
+            physics: const NeverScrollableScrollPhysics(),  
+            children: [  
+              _buildDataCard(  
+                'Temp (C)',  
+                '${state.currentWeather.tempC ?? '-'}',  
+              ),              
+              _buildDataCard(  
+                'Feels Like (C)',  
+                '${state.currentWeather.feelslikeC ?? '-'}',  
+              ),              
+              _buildDataCard(  
+                'Wind (km/h)',  
+                '${state.currentWeather.windKph ?? '-'}',  
+              ),              
+              _buildDataCard(  
+                'Wind Dir',  
+                state.currentWeather.windDir,  
+              ),              
+              _buildDataCard(  
+                'Precip (mm)',  
+                '${state.currentWeather.precipMm ?? '-'}',  
+              ),              
+              _buildDataCard(  
+                'Humidity (%)',  
+                '${state.currentWeather.humidity ?? '-'}',  
+              ),              
+              _buildDataCard(  
+                'Cloud (%)',  
+                '${state.currentWeather.cloud ?? '-'}',  
+              ),              
+              _buildDataCard(  
+                'Vis (km)',  
+                '${state.currentWeather.visKm ?? '-'}',  
+              ),              
+              _buildDataCard(  
+                'UV',  
+                '${state.currentWeather.uv ?? '-'}',  
               ),
             ],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Last Updated: ${state.currentWeather.lastUpdated}',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ],
-      );
-    }
-
-    if (state is CurrentWeatherLoadingState) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    if (state is CurrentWeatherErrorState) {
-      return Text(state.message);
-    }
-
-    return const SizedBox();
+          ),          
+          const SizedBox(height: 16),  
+          Text(  
+            'Last Updated: ${state.currentWeather.lastUpdated}',  
+            style: Theme.of(context).textTheme.bodySmall,  
+          ),        
+        ],      
+      );    
+    }  
+    if (state is CurrentWeatherLoadingState) {  
+      return const Center(child: CircularProgressIndicator());  
+    }  
+    if (state is CurrentWeatherErrorState) {  
+      return Text(state.message);  
+    }  
+    return const SizedBox();  
+  }  
+  Widget _buildDataCard(String header, String? content) {  
+    return Card(  
+      child: Column(  
+        crossAxisAlignment: CrossAxisAlignment.center,  
+        mainAxisAlignment: MainAxisAlignment.center,  
+        children: [  
+          Text(header, textAlign: TextAlign.center),  
+          Text(  
+            content ?? '-',  
+            textAlign: TextAlign.center,  
+            style: Theme.of(context).textTheme.headlineLarge,  
+          ),        
+        ],      
+      ),    
+    );  
   }
+}
+```
 
-  Widget _buildDataCard(String header, String? content) {
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(header, textAlign: TextAlign.center),
-          Text(
-            content ?? '-',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineLarge,
-          ),
-        ],
+and we also need a page to change application configurations (for now we only have a theme mode config).
+
+```dart
+// lib/feature/app_settings/presentation/app_settings_page.dart
+
+import 'package:auto_route/auto_route.dart';  
+import 'package:clean_architecture/core/presentation/theme/theme_mode_cubit.dart';  
+import 'package:flutter/material.dart';  
+import 'package:flutter_bloc/flutter_bloc.dart';  
+  
+@RoutePage()  
+class AppSettingsPage extends StatefulWidget {  
+  const AppSettingsPage({super.key});  
+  
+  @override  
+  State<AppSettingsPage> createState() => _AppSettingsPageState();  
+}  
+  
+class _AppSettingsPageState extends State<AppSettingsPage> {  
+  @override  
+  Widget build(BuildContext context) {  
+    final themeSetting = Row(  
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,  
+      children: [  
+        const Text('App Theme'),  
+        DropdownButton<ThemeMode>(  
+          items: const [  
+            DropdownMenuItem(  
+              value: ThemeMode.system,  
+              child: Text('System'),  
+            ),            DropdownMenuItem(  
+              value: ThemeMode.light,  
+              child: Text('Light'),  
+            ),            DropdownMenuItem(  
+              value: ThemeMode.dark,  
+              child: Text('Dark'),  
+            ),
+          ],
+          value: context.watch<ThemeModeCubit>().state,  
+          onChanged: (value) {  
+            context.read<ThemeModeCubit>().setThemeMode(value!);  
+          },
+        ),
+      ],
+    );  
+    return Scaffold(  
+      appBar: AppBar(  
+        title: const Text('App Settings'),  
       ),
-    );
+      body: ListView(  
+        padding: const EdgeInsets.symmetric(horizontal: 16),  
+        children: [  
+          themeSetting,  
+        ],      
+	  ),    
+	);
   }
 }
 ```
@@ -949,19 +1014,20 @@ As for the routing I mentioned in the previously, we will create an `app_router.
 ```dart
 // lib/core/router/app_router.dart
 
-import 'package:auto_route/auto_route.dart';
-import 'package:clean_architecture/core/router/app_router.gr.dart';
-
-@AutoRouterConfig()
-class AppRouter extends RootStackRouter {
-  @override
-  List<AutoRoute> get routes => [
-        AutoRoute(
-          page: CurrentWeatherRoute.page,
-          initial: true,
-        ),
+import 'package:auto_route/auto_route.dart';  
+import 'package:clean_architecture/core/router/app_router.gr.dart';  
+  
+@AutoRouterConfig()  
+class AppRouter extends RootStackRouter {  
+  @override  
+  List<AutoRoute> get routes => [  
+        AutoRoute(  
+          page: CurrentWeatherRoute.page,  
+          initial: true,  
+        ),        
+        AutoRoute(page: AppSettingsRoute.page),  
       ];
-}
+    }
 ```
 
 ---
@@ -1017,46 +1083,86 @@ void setup() {
 }
 ```
 
+To monitor events and states in our bloc, also add a `bloc observer` class.
+
+```dart
+// lib/core/presentation/bloc/app_bloc_observer.dart
+
+import 'dart:developer' as dev;  
+  
+import 'package:flutter_bloc/flutter_bloc.dart';  
+  
+class AppBlocObserver extends BlocObserver {  
+  @override  
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {  
+    dev.log("[bloc_error] $bloc\nerror: $error\nstacktrace: $stackTrace");  
+    super.onError(bloc, error, stackTrace);  
+  }  
+  @override  
+  void onChange(BlocBase bloc, Change change) {  
+    dev.log(  
+        "[${bloc.runtimeType}] ${DateTime.now().toIso8601String()}\nFrom: ${change.currentState}\nNext: ${change.nextState}");  
+    super.onChange(bloc, change);  
+  }
+}
+```
+
 Now we have all the required components for our app, lets look at the `main.dart` file.
 
 ```dart
 // lib/main.dart
 
-import 'package:clean_architecture/core/router/app_router.dart';
-import 'package:clean_architecture/features/weather/presentation/bloc/current_weather_bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'injection_container.dart' as ic;
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // dependency injection setup
-  ic.setup();
-  await ic.getIt.allReady();
-
-  runApp(WeatherApp());
-}
-
-class WeatherApp extends StatelessWidget {
-  WeatherApp({super.key});
-
-  final _appRouter = AppRouter();
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<CurrentWeatherBloc>(
-          create: (context) => ic.getIt(),
+import 'package:clean_architecture/core/presentation/bloc/app_bloc_observer.dart';  
+import 'package:clean_architecture/core/presentation/theme/app_theme.dart';  
+import 'package:clean_architecture/core/presentation/theme/theme_mode_cubit.dart';  
+import 'package:clean_architecture/core/router/app_router.dart';  
+import 'package:clean_architecture/features/weather/presentation/bloc/current_weather_bloc.dart';  
+import 'package:flutter/material.dart';  
+import 'package:flutter_bloc/flutter_bloc.dart';  
+import 'injection_container.dart' as ic;  
+  
+Future<void> main() async {  
+  WidgetsFlutterBinding.ensureInitialized();  
+  
+  // dependency injection setup  
+  ic.setup();  
+  await ic.getIt.allReady();  
+  
+  // register bloc observer  
+  Bloc.observer = AppBlocObserver();  
+  
+  runApp(WeatherApp());  
+}  
+  
+class WeatherApp extends StatelessWidget {  
+  WeatherApp({super.key});  
+  
+  final _appRouter = AppRouter();  
+  
+  @override  
+  Widget build(BuildContext context) {  
+    return MultiBlocProvider(  
+      providers: [  
+        BlocProvider<ThemeModeCubit>(  
+          create: (context) => ic.getIt(),  
         ),
+        BlocProvider<CurrentWeatherBloc>(  
+          create: (context) => ic.getIt(),  
+        ),      
       ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        title: 'Weather App',
-        routerConfig: _appRouter.config(),
+      child: BlocBuilder<ThemeModeCubit, ThemeMode>(  
+        builder: (context, state) {  
+          return MaterialApp.router(  
+            debugShowCheckedModeBanner: false,  
+            title: 'Weather App',  
+            theme: lightTheme,  
+            darkTheme: darkTheme,  
+            themeMode: state,  
+            routerConfig: _appRouter.config(),  
+          );
+        },
       ),
-    );
+    );  
   }
 }
 ```
