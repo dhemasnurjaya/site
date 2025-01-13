@@ -4,11 +4,9 @@ label:
   text: "#!"
 
 keywords: [Blog, Portfolio, Software, Developer, Engineer, Code, Coding, Tech, Mobile, Android, iOS, Flutter, Dart]
-author: Me
 contact:
   email: dhemasnurjaya@gmail.com
 
-ShowReadingTime: false
 ShowShareButtons: true
 ShowPostNavLinks: true
 ShowBreadCrumbs: true
