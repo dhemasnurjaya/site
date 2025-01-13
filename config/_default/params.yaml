@@ -8,11 +8,11 @@ author: Me
 contact:
   email: dhemasnurjaya@gmail.com
 
-ShowReadingTime: true
+ShowReadingTime: false
 ShowShareButtons: true
 ShowPostNavLinks: true
 ShowBreadCrumbs: true
-ShowCodeCopyButtons: true]
+ShowCodeCopyButtons: true
 Showtoc: true
 
 profileMode:
