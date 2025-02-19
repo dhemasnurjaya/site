@@ -3,7 +3,7 @@ $remoteUser = "admin"
 $remoteHost = "dhemasnurjaya.com"
 $remoteDir = "/home/admin/apps/dhemasnurjaya_site/public/"
 $localDir = "public/"
-$keyPath = "C:\Users\dhemas\Development\lightsail-defaultkey-ap-southeast-1.ppk"
+$keyPath = "X:\Secrets\lightsail-defaultkey-ap-southeast-1.ppk"
 $winscpExecutable = "C:\Users\dhemas\AppData\Local\Programs\WinSCP\winscp.com"  # Update this if needed
 
 # Build using production environment
