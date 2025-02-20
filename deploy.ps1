@@ -12,7 +12,7 @@ hugo --environment production
 # Generate WinSCP commands
 $scriptContent = @"
 open sftp://$remoteUser@$remoteHost -privatekey=$keyPath
-synchronize remote $localDir $remoteDir
+synchronize remote -criteria=checksum $localDir $remoteDir
 exit
 "@
 
