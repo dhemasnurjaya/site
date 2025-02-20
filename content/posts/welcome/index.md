@@ -3,7 +3,7 @@ title: 'Welcome'
 date: 2024-03-18T14:16:19+07:00
 draft: false
 tags:
-  - Misc
+  - misc
 ---
 
 ## Introduction

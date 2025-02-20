@@ -6,7 +6,7 @@ images:
 date: 2025-01-12T00:12:04+07:00
 draft: false
 tags:
-  - Flutter
+  - flutter
 ---
 
 ![flutter-clean-architecture](media/flutter_dash.png)
