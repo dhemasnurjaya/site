@@ -21,4 +21,4 @@ I never really write anything in my 7 years journey and I feel kinda regretted i
 
 This is a cat from my work, maybe someday she can be a good software tester to find ~~mice~~ bugs from my code.
 
-![Piko 1](media/piko_1.webp) ![Piko 2](media/piko_2.webp) ![Piko 3](media/piko_3.webp)
+![Piko 1](assets/piko_1.webp) ![Piko 2](assets/piko_2.webp) ![Piko 3](assets/piko_3.webp)

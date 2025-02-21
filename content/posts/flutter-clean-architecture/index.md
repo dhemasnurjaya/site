@@ -2,14 +2,14 @@
 title: 'Flutter Clean Architecture'
 description: Dive into Clean Architecture for Flutter or Dart projects
 images:
-- media/opengraph.png
+- assets/opengraph.png
 date: 2025-01-12T00:12:04+07:00
 draft: false
 tags:
   - flutter
 ---
 
-![flutter-clean-architecture](media/flutter_dash.png)
+![flutter-clean-architecture](assets/flutter_dash.png)
 
 ## What is Clean Architecture?
 Do you ever wondering how to manage your Flutter code? How to make it neat, modular, easy to maintain and test? Here where *clean architecture* comes in.
