@@ -4,6 +4,7 @@ description: "A fix for new Flutter project that doesn't have Android devices sh
 date: 2025-02-22T09:21:22+07:00
 draft: false
 tags:
+  - programming
   - flutter
   - android
   - emulator

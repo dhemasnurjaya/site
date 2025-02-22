@@ -4,6 +4,7 @@ description: 'Flutter Daily Quote App'
 date: 2025-02-20T15:26:04+07:00
 draft: true
 tags:
+  - programming
   - flutter
 ---
 
