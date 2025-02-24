@@ -1,6 +1,6 @@
 ---
-title: 'Fix ADB Unsufficient Permission'
-description: 'udev rules for fixing ADB unsufficient permission in Linux'
+title: 'Fix ADB Insufficient Permission'
+description: 'udev rules for fixing ADB Insufficient permission in Linux'
 date: 2025-02-24T11:29:30+07:00
 draft: false
 tags:
@@ -10,7 +10,7 @@ tags:
 ---
 
 ## Why need this?
-Connecting an Android device to a Linux computer could has problem with permission. Listing devices with `adb devices` might show `unauthorized` status or `unsufficient permission` error message.
+Connecting an Android device to a Linux computer could has problem with permission. Listing devices with `adb devices` might show `unauthorized` status or `insufficient permission` error message.
 
 ```bash
 $ adb devices
