@@ -1,0 +1,10 @@
+params:
+  assets:
+    disableHLJS: true
+
+markup:
+  highlight:
+    codeFences: true
+    guessSyntax: true
+    lineNos: true
+    style: monokai
