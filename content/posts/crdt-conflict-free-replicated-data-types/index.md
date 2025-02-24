@@ -1,15 +1,14 @@
 ---
 title: 'CRDT - Conflict Free Replicated Data Types'
 description: 'A brief intro to Conflict Free Replicated Data Types'
-date: 2025-02-22T09:58:08+07:00
-draft: true
+date: 2025-02-24T09:58:08+07:00
+draft: false
 tags:
   - programming
   - dart
   - data
 ---
 
-# CRDT
 ## Background
 When searching techniques for syncing data between peers, I stumbled upon CRDT (Conflict-free Replicated Data Types). It's basically a algorithm for syncing for distributed systems. CRDT ensures all data changes between peer will be synced with correct order and no data loss.
 
