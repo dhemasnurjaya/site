@@ -1,5 +1,5 @@
 ---
-title: 'Fix Infinix Air Pro+ Color'
+title: 'Fix Infinix Air Pro+ Screen Color'
 description: 'Fixing Infinix Air Pro+ washed out screen color in Windows and Linux'
 date: 2025-02-21T18:09:54+07:00
 draft: false
@@ -153,11 +153,27 @@ User=dhemas
 WantedBy=multi-user.target
 ```
 
+and another one to run `brightness-fix.sh` after waking up from suspend/sleep, I put it in `/etc/systemd/system/brightness-fix-wakeup.service`.
+
+```plaintext
+[Unit]
+Description=Fix screen brightness after wakeup
+After=suspend.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/brightness_fix.sh
+
+[Install]
+WantedBy=suspend.target
+```
+
 Then register, enable, and start it.
 
 ```bash
 sudo systemctl daemon-reload 
 sudo systemctl enable brightness-fix.service
+sudo systemctl enable brightness-fix-wakeup.service
 sudo systemctl start brightness-fix.service
 ```
 
